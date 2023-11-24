@@ -6,8 +6,19 @@ export enum ActorDirection{
     RIGHT = 1,
 }
 
+export enum ActorType{
+    Null = -1,
+    Player = 0,
+    CommonEnemy = 1,
+    EliteEnemy = 2,
+    Boss = 3,
+}
+
 @ccclass('Actor')
 export class Actor extends Component {
+
+    @property
+    ActorType: ActorType = ActorType.Null;
 
     public speed: number = 4;
     public direction: ActorDirection = ActorDirection.RIGHT;
@@ -52,7 +63,11 @@ export class Actor extends Component {
     }
 
     getBody(): Node{
-        return this.node.getChildByName("Body");
+        if(this.ActorType == ActorType.Player){
+            return this.node.getChildByName("Body");
+        }else if(this.ActorType == ActorType.CommonEnemy){
+            return this.node;
+        }
     }
 
 }

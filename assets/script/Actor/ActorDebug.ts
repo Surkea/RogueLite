@@ -18,6 +18,7 @@ export class ActorDebug extends Component {
         this._debugLabel = node.addComponent(Label);
         this._debugLabel.fontSize = 12;
         this._debugLabel.lineHeight = 16;
+        this._debugLabel.cacheMode = Label.CacheMode.CHAR;
     }
 
     update(deltaTime: number) {

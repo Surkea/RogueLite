@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, sp, Vec3 } from 'cc';
-import { Actor, ActorDirection } from './Actor';
+import { Actor, ActorDirection, ActorType } from './Actor';
 const { ccclass, property } = _decorator;
 
 const AnimIdle = "idle";
@@ -17,8 +17,11 @@ export class AnimController extends Component {
 
     start() {
         this._actor = this.node.getComponent(Actor);
-        this._spine = this._actor.getBody().getChildByName('Skin').getComponent(sp.Skeleton);
-
+        if (this._actor.ActorType == ActorType.CommonEnemy) {
+            this._spine = this._actor.node.getComponent(sp.Skeleton);
+        } else if (this._actor.ActorType == ActorType.Player) {
+            this._spine = this._actor.getBody().getChildByName('Skin').getComponent(sp.Skeleton);
+        }
         this._scaleX = this._actor.getBody().scale.x;
         this._scaleY = this._actor.getBody().scale.y;
         this._scaleZ = this._actor.getBody().scale.z;
@@ -28,13 +31,13 @@ export class AnimController extends Component {
     update(deltaTime: number) {
         if (this._actor.direction == ActorDirection.LEFT) {
             this._actor.getBody().setScale(-this._scaleX, this._scaleY, this._scaleZ);
-        }else{
+        } else {
             this._actor.getBody().setScale(this._scaleX, this._scaleY, this._scaleZ);
         }
 
-        if(this._actor.IsMoving && this._spine.animation == AnimIdle){
+        if (this._actor.IsMoving && this._spine.animation == AnimIdle) {
             this._spine.setAnimation(0, AnimRun, true);
-        }else if(!this._actor.IsMoving && this._spine.animation == AnimRun){
+        } else if (!this._actor.IsMoving && this._spine.animation == AnimRun) {
             this._spine.setAnimation(0, AnimIdle, true);
         }
     }
