@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, v3, Vec2, Vec3 } from 'cc';
+import { ActorProp } from './ActorProp';
 const { ccclass, property } = _decorator;
 
 export enum ActorDirection{
@@ -22,12 +23,14 @@ export class Actor extends Component {
 
     public speed: number = 4;
     public direction: ActorDirection = ActorDirection.RIGHT;
+    public prop : ActorProp = new ActorProp();
 
     public IsMoving: boolean = false;
 
     private _lastMoveFlag: boolean = false;
 
     onLoad(){
+        
     }
 
     start() {
