@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, sp, Vec3 } from 'cc';
-import { Actor, ActorDirection, ActorType } from './Actor';
+import { Actor, ActorDirection } from './Actor';
+import { ActorType } from './ActorProp';
 const { ccclass, property } = _decorator;
 
 const AnimIdle = "idle";

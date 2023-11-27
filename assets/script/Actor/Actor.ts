@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, v3, Vec2, Vec3 } from 'cc';
-import { ActorProp } from './ActorProp';
+import { ActorProp, ActorType } from './ActorProp';
+import { BlueAngel, Goblin } from './ActorPropDefine';
 const { ccclass, property } = _decorator;
 
 export enum ActorDirection{
@@ -7,19 +8,11 @@ export enum ActorDirection{
     RIGHT = 1,
 }
 
-export enum ActorType{
-    Null = -1,
-    Player = 0,
-    CommonEnemy = 1,
-    EliteEnemy = 2,
-    Boss = 3,
-}
-
 @ccclass('Actor')
 export class Actor extends Component {
 
     @property
-    ActorType: ActorType = ActorType.Null;
+    ActorType: ActorType = ActorType.Default;
 
     public speed: number = 4;
     public direction: ActorDirection = ActorDirection.RIGHT;
@@ -30,7 +23,14 @@ export class Actor extends Component {
     private _lastMoveFlag: boolean = false;
 
     onLoad(){
-        
+        if(this.ActorType == ActorType.Default){
+            console.error("ActorType is Default, please set it in the inspector");
+        }else if(this.ActorType == ActorType.Player){
+            this.prop = BlueAngel;
+        }else if(this.ActorType == ActorType.CommonEnemy){
+            this.prop = Goblin;
+        }
+    
     }
 
     start() {

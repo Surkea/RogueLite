@@ -29,7 +29,7 @@ export class ActorDebug extends Component {
         this._debugLabel.string = this.node.worldPosition.toString() + '\n';
         if (1) {
             if (1)
-                this._debugLabel.string += 'IsMoving:' + this._actor.IsMoving;
+                this._debugLabel.string += 'IsMoving:' + this._actor.IsMoving + ' | '+ this._actor.prop.speed;
         }
     }
 }
