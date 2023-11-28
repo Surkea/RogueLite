@@ -1,4 +1,5 @@
-import { _decorator, Component, Node, resources, Vec3 } from 'cc';
+import { _decorator, Color, Component, director, instantiate, Label, Node, Prefab, resources, Vec3 } from 'cc';
+import { DamageBubble } from '../UI/DamageBubble';
 const { ccclass, property } = _decorator;
 
 @ccclass('CommonUtils')
@@ -149,6 +150,13 @@ export function loadSrc(url: string, type: any, callback: Function) {
     });
 }
 
+export function bubbleText(bubble: Prefab, str: string, pos: Vec3){
+    let node = instantiate(bubble);
+    node.setParent(director.getScene().getChildByName('InGame').getChildByName('Bubble'));
+    node.setWorldPosition(pos);
+    node.getComponent(DamageBubble).show(str);
+
+}
 /* export function getActorsInCircleCollider(center: Vec3, radius: number, IncludeEnemy: boolean, IncludeFood: boolean, InclucdePlayer: boolean = false): Actor[] {
     // 假设 circleCollider 是你的 CircleCollider2D 实例
     let worldPosition = center.clone();

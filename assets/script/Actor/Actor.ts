@@ -1,8 +1,9 @@
-import { _decorator, Collider2D, Component, Node, RigidBody2D, v3, Vec2, Vec3 } from 'cc';
+import { _decorator, Collider2D, Component, Node, Prefab, RigidBody2D, v3, Vec2, Vec3 } from 'cc';
 import { ActorProp, ActorType } from './ActorProp';
 import { BlueAngel, Goblin } from './ActorPropDefine';
 import { sendNodeMsg } from '../Utils/GMPManager';
 import { ActorDead } from '../Utils/GMPKeys';
+import { bubbleText } from '../Utils/CommonUtils';
 const { ccclass, property } = _decorator;
 
 export enum ActorDirection {
@@ -22,6 +23,9 @@ export class Actor extends Component {
 
     @property
     ActorType: ActorType = ActorType.Default;
+
+    @property(Prefab)
+    damageBubble: Prefab = null;
 
     public speed: number = 4;
     public direction: ActorDirection = ActorDirection.RIGHT;
@@ -50,6 +54,7 @@ export class Actor extends Component {
 
     doDamage(damage: number, source: Actor) {
         damage = damage - this.prop.defense;
+        bubbleText( this.damageBubble, damage.toString(), this.node.getChildByName('Head').worldPosition.clone());
         this.prop.hp -= damage;
     }
 

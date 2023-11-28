@@ -33,7 +33,6 @@ export class Emitter extends Component {
     }
 
     emit() {
-        console.log("emit")
         if (this.BulletPrefab) {
             // 设置运动方向，朝向周围最近的敌人
             let target = this.getNearestEnemy();
