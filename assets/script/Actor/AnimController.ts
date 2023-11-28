@@ -1,10 +1,13 @@
-import { _decorator, Component, Node, sp, Vec3 } from 'cc';
+import { _decorator, Collider2D, Component, Node, RigidBody2D, sp, Vec3 } from 'cc';
 import { Actor, ActorDirection } from './Actor';
 import { ActorType } from './ActorProp';
+import { listenNodeMsg } from '../Utils/GMPManager';
+import { ActorDead } from '../Utils/GMPKeys';
 const { ccclass, property } = _decorator;
 
 const AnimIdle = "idle";
 const AnimRun = "run";
+const AnimDead = "dead";
 
 @ccclass('AnimController')
 export class AnimController extends Component {
@@ -26,6 +29,14 @@ export class AnimController extends Component {
         this._scaleX = this._actor.getBody().scale.x;
         this._scaleY = this._actor.getBody().scale.y;
         this._scaleZ = this._actor.getBody().scale.z;
+
+        listenNodeMsg(ActorDead, this.node, this.onDead, this);
+
+        this._spine.setCompleteListener((track: sp.spine.TrackEntry) =>{
+            if(track.animation.name == AnimDead){
+                this.node.destroy();
+            }
+        })
     }
 
 
@@ -41,6 +52,11 @@ export class AnimController extends Component {
         } else if (!this._actor.IsMoving && this._spine.animation == AnimRun) {
             this._spine.setAnimation(0, AnimIdle, true);
         }
+    }
+
+    onDead(){
+        if(this._spine.animation == AnimDead) return;
+        this._spine.setAnimation(0 , AnimDead, false)
     }
 
 }

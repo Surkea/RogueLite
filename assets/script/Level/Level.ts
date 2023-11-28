@@ -15,7 +15,7 @@ export class Level extends Component {
     private _timer: number = 0;
     private _enemyCount: number = 0;
     private _enemyMaxCount: number = 500;
-    private _enemySpawnInterval: number = 0.1;
+    private _enemySpawnInterval: number = 1;
     private _enemySpawnDistance: number = 200;
 
     start() {
@@ -32,7 +32,7 @@ export class Level extends Component {
 
     spawnEnemy() {
         if (this._enemyCount >= this._enemyMaxCount) return;
-        let canvas = this.node.parent;
+        let canvas = this.node.parent.getChildByName('Enemies');
         let screenSize = view.getVisibleSize();
         let camPos = getSingletonGeneric(this.node, Level).levelCamera.node.worldPosition;
 
