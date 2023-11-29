@@ -11,9 +11,13 @@ export class Bullet extends Component {
     private _hitTimes: number = 1;
     private _flyTimes: number = 5;
 
-    setAttack(attack: number, source: Actor){
+    setProp(attack: number, source: Actor, hitTimes?:number, flyTimes?:number){
         this._atttack = attack;
         this.souece = source;
+        if(hitTimes)
+            this._hitTimes = hitTimes;
+        if(flyTimes)
+            this._flyTimes = flyTimes;
     }
 
     start() {

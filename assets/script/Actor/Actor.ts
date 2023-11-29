@@ -11,7 +11,7 @@ export enum ActorDirection {
     RIGHT = 1,
 }
 
-enum ActorState {
+export enum ActorState {
     IDLE = 0,
     RUN = 1,
     ATTACK = 2,

@@ -154,7 +154,7 @@ export function bubbleText(bubble: Prefab, str: string, pos: Vec3){
     let node = instantiate(bubble);
     node.setParent(director.getScene().getChildByName('InGame').getChildByName('Bubble'));
     node.setWorldPosition(pos);
-    node.getComponent(DamageBubble).show(str);
+    node.getComponent(DamageBubble).onShow(str);
 
 }
 /* export function getActorsInCircleCollider(center: Vec3, radius: number, IncludeEnemy: boolean, IncludeFood: boolean, InclucdePlayer: boolean = false): Actor[] {

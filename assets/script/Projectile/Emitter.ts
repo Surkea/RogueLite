@@ -1,6 +1,6 @@
 import { _decorator, Component, director, instantiate, Node, Prefab, RigidBody2D, v2, v3 } from 'cc';
 import { Bullet } from './Bullet';
-import { Actor } from '../Actor/Actor';
+import { Actor, ActorState } from '../Actor/Actor';
 const { ccclass, property } = _decorator;
 
 @ccclass('Emitter')
@@ -39,7 +39,7 @@ export class Emitter extends Component {
             if (target) {
                 // 实例化一个子弹
                 let bullet = instantiate(this.BulletPrefab);
-                bullet.getComponent(Bullet).setAttack(this._actor.prop.attack, this.node.getComponent(Actor));
+                bullet.getComponent(Bullet).setProp(this._actor.prop.attack, this.node.getComponent(Actor),10);
                 this._parent.addChild(bullet);
                 bullet.setWorldPosition(this.node.worldPosition.clone().add(v3(0, 55, 0)));
                 // console.log("target:", target.name)
@@ -57,6 +57,8 @@ export class Emitter extends Component {
         let nearestEnemy = null;
         for (let i = 0; i < children.length; i++) {
             let child = children[i];
+            if(child.getComponent(Actor).state == ActorState.DEAD)
+                continue;
             let dist = child.worldPosition.clone().subtract(this.node.worldPosition).length();
             if (dist < minDist) {
                 minDist = dist;
